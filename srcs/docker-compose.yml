@@ -21,8 +21,6 @@ services:
       - wordpress_data:/var/www/
     networks:
       - inception
-    ports:
-      - "9000:9000"
     restart: always
     
   nginx:

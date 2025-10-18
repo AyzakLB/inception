@@ -33,4 +33,4 @@ wp user create \
 
 fi
 
-php-fpm7.4 -F
+exec php-fpm7.4 -F

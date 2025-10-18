@@ -28,4 +28,4 @@ RUN apt-get install -y net-tools
 
 ENTRYPOINT [ "/var/wordpress_init.sh" ]
 
-CMD ["php-fpm7.4", "-F"]
+# CMD ["php-fpm7.4", "-F"]
