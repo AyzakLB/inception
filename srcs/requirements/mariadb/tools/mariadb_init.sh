@@ -2,9 +2,7 @@
 
 set -e
 
-if [ -d "/var/lib/mysql/${MARIADB_DATABASE}" ]; then
-    exit 0
-fi
+if [ ! -d "/var/lib/mysql/${MARIADB_DATABASE}" ]; then
 
 mariadbd-safe &
 
@@ -20,3 +18,6 @@ FLUSH PRIVILEGES;
 EOF
 
 mariadb-admin shutdown
+fi
+
+exec mariadbd-safe

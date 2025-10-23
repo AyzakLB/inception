@@ -4,7 +4,7 @@ set -e
 
 if [ ! -f /var/www/wp-config.php ]; then
 
-until mariadb-admin  -u $MARIADB_USER -p"$MARIADB_PASSWORD" ping -s; do
+until mariadb-admin -h mariadb -u $MARIADB_USER  -p"$MARIADB_PASSWORD"  ping -s ; do
     sleep 1
 done
 
