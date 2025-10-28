@@ -31,6 +31,15 @@ wp user create \
     --skip-email \
     --allow-root
 
+wp --allow-root plugin install redis-cache
+until reids-cli -h redis ping ; do
+    sleep 1
+done
+wp --allow-root config set WP_REDIS_HOST "redis"
+wp --allow-root config set WP_REDIS_PORT "6379"
+wp --allow-root config set WP_CACHE true --raw
+wp --allow-root redis enable
+
 fi
 
 exec php-fpm7.4 -F

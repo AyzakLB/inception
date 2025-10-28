@@ -1,4 +1,10 @@
 services:
+  redis:
+      build: ./bonus/redis
+      container_name: redis
+      networks:
+        - inception
+      restart: always
 
   mariadb:
     build: ./requirements/mariadb
@@ -22,7 +28,6 @@ services:
     networks:
       - inception
     restart: always
-    
   nginx:
     build: ./requirements/nginx
     container_name: nginx
@@ -37,6 +42,7 @@ services:
     networks:
       - inception
     restart: always
+    
 
 volumes:
   mariadb_data:
