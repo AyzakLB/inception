@@ -1,11 +1,39 @@
 services:
+  static_website:
+    build: ./bonus/static_website
+    container_name: static_website
+    ports:
+      - "8081:80"
+    networks:
+      - inception
+    restart: always
   redis:
       build: ./bonus/redis
       container_name: redis
       networks:
         - inception
       restart: always
-
+  adminer:
+    build: ./bonus/adminer
+    container_name: adminer
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:8080"
+    restart: always
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 9443:9443
+    networks:
+      - inception
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
@@ -49,6 +77,8 @@ volumes:
     driver: local
   wordpress_data:
     driver: local
+  portainer_data:
+    name: portainer_data
 
 networks:
   inception:

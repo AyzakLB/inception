@@ -32,7 +32,7 @@ wp user create \
     --allow-root
 
 wp --allow-root plugin install redis-cache
-until reids-cli -h redis ping ; do
+until redis-cli -h redis ping ; do
     sleep 1
 done
 wp --allow-root config set WP_REDIS_HOST "redis"
