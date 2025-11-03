@@ -1,4 +1,5 @@
 FROM debian:bullseye
+
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y lsb-release curl gpg
 RUN curl -fsSL https://packages.redis.io/gpg |  gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg

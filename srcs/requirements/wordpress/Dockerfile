@@ -3,14 +3,12 @@ FROM debian:bullseye
 RUN apt-get update -y && apt-get upgrade -y
 
 WORKDIR /var/www/
-RUN apt-get install -y net-tools
 
 RUN apt-get install -y php7.4-fpm php7.4-mysql mariadb-client curl php7.4-redis redis-tools
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar  \
         && chmod +x wp-cli.phar \ 
             && mv wp-cli.phar /usr/local/bin/wp
-
 
 RUN wp core download --allow-root
 
@@ -25,7 +23,6 @@ RUN chmod +x /var/wordpress_init.sh
 EXPOSE 9000
 
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-
 
 ENTRYPOINT [ "/var/wordpress_init.sh" ]
 

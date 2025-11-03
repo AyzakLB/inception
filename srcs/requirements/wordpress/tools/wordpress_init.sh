@@ -30,16 +30,16 @@ wp user create \
     --user_email=$WP_USER_EMAIL \
     --skip-email \
     --allow-root
+fi
 
-wp --allow-root plugin install redis-cache
+wp  plugin install redis-cache --allow-root
 until redis-cli -h redis ping ; do
     sleep 1
 done
-wp --allow-root config set WP_REDIS_HOST "redis"
-wp --allow-root config set WP_REDIS_PORT "6379"
-wp --allow-root config set WP_CACHE true --raw
-wp --allow-root redis enable
-
-fi
+wp  config set WP_REDIS_HOST "redis" --allow-root
+wp  config set WP_REDIS_PORT "6379" --allow-root
+wp  config set WP_CACHE true --raw --allow-root
+wp plugin activate redis-cache  --allow-root
+wp  redis enable --allow-root
 
 exec php-fpm7.4 -F

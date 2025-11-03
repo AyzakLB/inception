@@ -25,11 +25,11 @@ services:
     restart: always
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:lts
+    build: ./bonus/portainer
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - portainer_volume:/data
     ports:
       - 9443:9443
     networks:
@@ -40,7 +40,7 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb_volume:/var/lib/mysql
     networks:
       - inception
     restart: always
@@ -49,10 +49,11 @@ services:
     container_name: wordpress
     depends_on:
       - mariadb
+      - redis
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/
+      - wordpress_volume:/var/www
     networks:
       - inception
     restart: always
@@ -64,22 +65,33 @@ services:
     ports:
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/
+      - wordpress_volume:/var/www
     env_file:
       - .env
     networks:
       - inception
     restart: always
-    
 
 volumes:
-  mariadb_data:
-    driver: local
-  wordpress_data:
-    driver: local
-  portainer_data:
+  mariadb_volume:
+    name: mariadb_data
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/amarzaq/data/mariadb
+  wordpress_volume:
+    name: wordpress_data
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/amarzaq/data/wordpress
+  portainer_volume:
     name: portainer_data
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/amarzaq/data/portainer
 
 networks:
   inception:
-    driver: bridge
+    name: inception_network

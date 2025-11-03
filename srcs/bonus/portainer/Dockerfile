@@ -9,4 +9,4 @@ RUN apt-get update && apt-get install -y curl ca-certificates \
 
 EXPOSE 9443
 
-CMD ["/usr/local/bin/portainer", "run", "--bind=:9443", "--data=/data"]
+CMD ["/usr/local/bin/portainer/portainer", "--bind=:9443", "--data=/data"]
