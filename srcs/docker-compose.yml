@@ -1,4 +1,16 @@
 services:
+  ftp:
+    build: ./bonus/ftp
+    container_name: ftp
+    ports:
+      - "21:21"
+      - "30000-30100:30000-30100"
+    networks:
+      - inception
+    volumes:
+      - wordpress_volume:/var/www
+    env_file:
+      - .env
   static_website:
     build: ./bonus/static_website
     container_name: static_website
